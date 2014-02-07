@@ -1,4 +1,4 @@
-Out-TFSReportsToCSV
+Out-TFSProjectsToCSV
 ===================
 
 NAME
