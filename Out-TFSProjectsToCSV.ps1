@@ -70,8 +70,9 @@
 	function Convert-RTFtoTXT
 	{
 		Write-Progress -id 1 -Activity "Converting RTF to Text" -Status $TFSProjectsFile
+		write-verbose "opening $TFSProjectsFile in Microsoft Word"
 		Add-Type -AssemblyName Microsoft.Office.Interop.Word
-		$wordApp = New-Object -ComObject Word.Application
+		
 		$wordApp.visible = $false
 		$wordapp.DisplayAlerts = [microsoft.office.interop.word.wdalertlevel]::wdAlertsNone
 		
@@ -79,6 +80,7 @@
 		
 		$wordDoc = $wordApp.Documents.Open($TFSProjectsFile)
 		$wordDoc.SaveAs([ref]$txtFile, [ref][Microsoft.Office.Interop.Word.WDSaveFormat]::wdFormatText)
+
 		$wordDoc.Close()
 		
 		$wordApp.Quit()
@@ -88,8 +90,8 @@
 	
 	function TFSProjectsToCSV
 	{
-		$rx_NameEmail        =                 [regex]"\t+Name\ \:\ (?<Name>[\w]+\,*\ *[\w]*)\t+Email\ \:\ (?<Email>.*)"
-		$rx_ProjectGroupName =                 [regex]"\t+Project\ Group\ Name[\ \:]+(?<ProjectGroupName>.*)"
+		$rx_NameEmail        =                 [regex]"\t*Name\ \:\ (?<Name>[\w]+\,*\ *[\w]*)\t+Email\ \:\ (?<Email>.*)"
+		$rx_ProjectGroupName =                 [regex]"\t*Project\ Group\ Name[\ \:]+(?<ProjectGroupName>.*)"
 		$rx_ProjectName      =                 [regex]"Project\ Name[\ \:]+(?<ProjectName>.*)"
 	
 		$TFSProjects = Get-Content $txtFile
@@ -137,7 +139,6 @@
 					}
 					
 					write-progress -id 1 -Activity "$ProjectName | $GroupName | $Name | $Email | $NTAccountName" -Status "$($percentComplete)% Complete" -PercentComplete $percentComplete
-
 				}
 		}
 		
