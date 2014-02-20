@@ -74,7 +74,7 @@
 		Add-Type -AssemblyName Microsoft.Office.Interop.Word
 		
 		$wordApp = New-Object -COMObject Word.Application
-		$wordApp.visible = $false	Add-Type -AssemblyName Microsoft.Office.Interop.Word
+		$wordApp.visible = $false	
 		$wordapp.DisplayAlerts = [microsoft.office.interop.word.wdalertlevel]::wdAlertsNone
 		
 		$txtFile = $TFSProjectsFile.Replace("rtf","txt")
@@ -154,7 +154,7 @@
 
 	Add-PSSnapin Quest.ActiveRoles.ADManagement -ErrorAction SilentlyContinue
 	$ErrorActionPreference = "SilentlyContinue"
-	$verbosePreference = "continue"
+	#$verbosePreference = "continue"
 
 	$txtFile = Convert-RTFtoTXT
 	TFSProjectsToCSV
