@@ -73,7 +73,8 @@
 		write-verbose "opening $TFSProjectsFile in Microsoft Word"
 		Add-Type -AssemblyName Microsoft.Office.Interop.Word
 		
-		$wordApp.visible = $false
+		$wordApp = New-Object -COMObject Word.Application
+		$wordApp.visible = $false	Add-Type -AssemblyName Microsoft.Office.Interop.Word
 		$wordapp.DisplayAlerts = [microsoft.office.interop.word.wdalertlevel]::wdAlertsNone
 		
 		$txtFile = $TFSProjectsFile.Replace("rtf","txt")
@@ -153,7 +154,8 @@
 
 	Add-PSSnapin Quest.ActiveRoles.ADManagement -ErrorAction SilentlyContinue
 	$ErrorActionPreference = "SilentlyContinue"
-	
+	$verbosePreference = "continue"
+
 	$txtFile = Convert-RTFtoTXT
 	TFSProjectsToCSV
 }
@@ -161,6 +163,3 @@
 Write-Host "New Commands added:" -ForegroundColor Green
 Write-Host "`tOut-TFSProjectsToCSV" 
 Write-Host "`nFor command usage, please use the Get-Help command." -ForegroundColor Yellow
-
-	
-	
